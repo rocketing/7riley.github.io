@@ -1,349 +1,81 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Riley</title>
-
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg:#ffffff;
-      --bubble: 255 182 213;
-      --pink1:#6feeff;
-      --pink2:#9af3ff;
-      --pink3:#c8f9ff;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-
-    body{
-      margin:0;
-      background:var(--bg);
-      font-family:"Baloo 2", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      overflow:hidden;
-
-      transition:
-        transform 2s cubic-bezier(.22,.8,.2,1),
-        opacity 2s ease,
-        filter 2s ease;
-      transform-origin:center;
-    }
-
-    body.shrink{
-      transform: scale(0.78);
-      opacity:0;
-      filter: blur(8px) brightness(1.15);
-    }
-
-    .fade-overlay{
-      position:fixed;
-      inset:0;
-      background: radial-gradient(circle at center,
-        rgba(255,255,255,0.65) 0%,
-        rgba(255,255,255,0.92) 45%,
-        rgba(255,255,255,1) 100%);
-      opacity:0;
-      pointer-events:none;
-      transition: opacity 2s ease;
-      z-index:5;
-    }
-    body.shrink .fade-overlay{ opacity:1; }
-
-    .bubbles{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
-      filter:saturate(1.05);
-    }
-
-    .bubble{
-      position:absolute;
-      border-radius:999px;
-      background: rgba(var(--bubble) / .26);
-      mix-blend-mode:multiply;
-      will-change: transform, opacity;
-      opacity:0;
-      transform: translate3d(0,0,0);
-      transition: opacity .7s ease;
-    }
-    .bubble.soft{
-      background: rgba(var(--bubble) / .14);
-    }
-
-    .wrap{
-      position:relative;
-      z-index:1;
-      height:100%;
-      display:grid;
-      place-items:center;
-      text-align:center;
-      padding:32px;
-    }
-
-    .stack{ transform: scale(1.18); transform-origin:center; }
-
-    h1{
-      margin:0;
-      font-weight:800;
-      letter-spacing:.6px;
-      font-size: clamp(64px, 8vw, 110px);
-      line-height:1;
-      background: linear-gradient(90deg, var(--pink1), var(--pink2), var(--pink3), var(--pink1));
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: gradientShift 3.5s ease-in-out infinite;
-      text-shadow: 0 10px 28px rgba(255, 111, 183, .18);
-    }
-    @keyframes gradientShift{
-      0%{ background-position: 0% 50%; }
-      50%{ background-position: 100% 50%; }
-      100%{ background-position: 0% 50%; }
-    }
-
-    .sub{
-      margin: 18px 0 28px;
-      font-size: clamp(30px, 4vw, 52px);
-      font-weight:700;
-      letter-spacing:.5px;
-    }
-
-    .icons{
-      display:flex;
-      justify-content:center;
-      gap:22px;
-    }
-
-    .icon{
-      width:84px;
-      height:84px;
-      border-radius:999px;
-      overflow:hidden;
-      display:grid;
-      place-items:center;
-      text-decoration:none;
-      background: rgba(255,255,255,.85);
-      border: 1px solid rgba(0,0,0,.08);
-      box-shadow: 0 14px 30px rgba(0,0,0,.12);
-      transition: transform .18s ease, box-shadow .18s ease;
-      will-change: transform;
-    }
-    .icon:hover{
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 18px 38px rgba(0,0,0,.16);
-    }
-
-    .icon img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      border-radius:999px;
-      transform-origin:center;
-    }
-
-    @keyframes spinOnce { to { transform: rotate(360deg); } }
-    .icon:hover img{ animation: spinOnce .55s linear 1; }
-
-    .icon:focus-visible{
-      outline: 4px solid rgba(144, 242, 255, 0.75);
-      outline-offset: 5px;
-    }
-
-    @media (max-width: 420px){
-      .stack{ transform: scale(1.06); }
-      .icon{ width:76px; height:76px; }
-      .icons{ gap:18px; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      h1{ animation:none !important; }
-      .icon:hover img{ animation:none !important; }
-      body{ transition:none !important; }
-      .fade-overlay{ transition:none !important; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riley</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--bg:#0a0a0a;--card:#111;--text:#f2f2f2;--muted:#888;--border:#1f1f1f;--hover:#1a1a1a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text)}
+.container{width:100%;max-width:520px;padding:40px 30px;background:var(--card);border:1px solid var(--border)}
+.top{display:flex;justify-content:space-between;align-items:flex-start}
+h1{margin:0;font-size:32px;font-weight:600;letter-spacing:-.5px}
+.pronouns{margin-top:6px;color:var(--muted);font-size:15px}
+.now-playing{display:flex;gap:10px;max-width:230px;font-size:12px}
+.now-playing img{width:40px;height:40px;object-fit:cover;border:1px solid var(--border)}
+.track-info{display:flex;flex-direction:column;line-height:1.3}
+.track-info strong{font-size:13px;font-weight:600}
+.track-info span{color:var(--muted)}
+.links{margin-top:35px;display:flex;flex-direction:column;gap:14px}
+a{text-decoration:none;color:var(--text);padding:14px 18px;border:1px solid var(--border);background:#0e0e0e;display:flex;justify-content:space-between;align-items:center;transition:.15s}
+a:hover{background:var(--hover)}
+.left{display:flex;align-items:center;gap:12px}
+.left i{width:18px;text-align:center;opacity:.85;font-size:16px}
+.arrow{opacity:.5;transition:.15s}
+a:hover .arrow{transform:translateX(4px);opacity:1}
+footer{margin-top:35px;font-size:12px;color:#666}
+</style>
 </head>
-
 <body>
-  <div class="bubbles" id="bubbles"></div>
-
-  <main class="wrap">
-    <div class="stack">
-      <h1>riley</h1>
-      <div class="sub">ライリー</div>
-
-      <nav class="icons" aria-label="links">
-        <a class="icon redirect" href="https://github.com/rocketing" aria-label="GitHub">
-          <img src="assets/github.png" alt="GitHub">
-        </a>
-
-        <a class="icon redirect" href="https://open.spotify.com/user/31kcl3foiantv5wvv4cryp2k5pbi" aria-label="Spotify">
-          <img src="assets/spotify.png" alt="Spotify">
-        </a>
-
-        <a class="icon redirect" href="https://discord.com/users/1142433636822548601" aria-label="Discord">
-          <img src="assets/discord.png" alt="Discord">
-        </a>
-      </nav>
-    </div>
-  </main>
-
-  <div class="fade-overlay"></div>
-
-  <script>
-    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    document.querySelectorAll(".redirect").forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const url = link.href;
-
-        if (prefersReduce) {
-          window.location.href = url;
-          return;
-        }
-
-        if (document.body.classList.contains("shrinking")) return;
-        document.body.classList.add("shrinking");
-        document.body.classList.add("shrink");
-
-        const onEnd = (ev) => {
-          if (ev.target === document.body && ev.propertyName === "transform") {
-            document.body.removeEventListener("transitionend", onEnd);
-            window.location.href = url;
-          }
-        };
-        document.body.addEventListener("transitionend", onEnd);
-      });
-    });
-
-    const layer = document.getElementById("bubbles");
-    const rand = (min, max) => Math.random() * (max - min) + min;
-
-    const ORB = {
-      maxOrbs: 28,
-      spawnEveryMs: 420,
-      minSize: 70,
-      maxSize: 560,
-      fallMin: 0.06,
-      fallMax: 0.18,
-      driftMin: 0.02,
-      driftMax: 0.10,
-      wobbleAmpMin: 6,
-      wobbleAmpMax: 24,
-      wobbleSpeedMin: 0.0016,
-      wobbleSpeedMax: 0.0045
-    };
-
-    const orbs = [];
-
-    function makeOrb(){
-      const el = document.createElement("div");
-      const soft = Math.random() < 0.45;
-      el.className = "bubble" + (soft ? " soft" : "");
-
-      const size = rand(ORB.minSize, ORB.maxSize);
-      el.style.width = size + "px";
-      el.style.height = size + "px";
-
-      const fromLeft = Math.random() < 0.5;
-
-      const x = fromLeft ? -size - rand(20, 180) : window.innerWidth + rand(20, 180);
-      const y = rand(-120, window.innerHeight * 0.85);
-
-      const inward = rand(ORB.driftMin, ORB.driftMax) * (fromLeft ? 1 : -1);
-      const sidewaysNoise = rand(-0.03, 0.03);
-      const vx = (inward + sidewaysNoise) * (soft ? 0.85 : 1);
-
-      const vy = rand(ORB.fallMin, ORB.fallMax) * (soft ? 0.85 : 1);
-
-      const orb = {
-        el,
-        x, y,
-        vx, vy,
-        size,
-        t: rand(0, 9999),
-        wobbleAmp: rand(ORB.wobbleAmpMin, ORB.wobbleAmpMax),
-        wobbleSpeed: rand(ORB.wobbleSpeedMin, ORB.wobbleSpeedMax)
-      };
-
-      layer.appendChild(el);
-      requestAnimationFrame(() => { el.style.opacity = "1"; });
-
-      orbs.push(orb);
-
-      while (orbs.length > ORB.maxOrbs){
-        const old = orbs.shift();
-        old.el.remove();
-      }
-    }
-
-    function tick(dt){
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      for (let i = orbs.length - 1; i >= 0; i--){
-        const o = orbs[i];
-        o.t += dt * 1000;
-
-        const wobble = Math.sin(o.t * o.wobbleSpeed) * o.wobbleAmp;
-
-        o.x += o.vx * dt * 60 * 22;
-        o.y += o.vy * dt * 60 * 22;
-
-        o.el.style.transform = `translate3d(${o.x + wobble}px, ${o.y}px, 0)`;
-
-        if (o.y - o.size > h + 220){
-          o.el.remove();
-          orbs.splice(i, 1);
-        }
-
-        if (o.x < -o.size - 600 || o.x > w + 600){
-          if (o.y > h * 0.5){
-            o.el.remove();
-            orbs.splice(i, 1);
-          }
-        }
-      }
-    }
-
-    if (!prefersReduce){
-      for (let i = 0; i < 14; i++) makeOrb();
-
-      setInterval(() => {
-        if (!document.body.classList.contains("shrinking")) makeOrb();
-      }, ORB.spawnEveryMs);
-
-      let last = performance.now();
-      function loop(now){
-        const dt = Math.min(0.05, (now - last) / 1000);
-        last = now;
-        tick(dt);
-        requestAnimationFrame(loop);
-      }
-      requestAnimationFrame(loop);
-    } else {
-      for (let i = 0; i < 14; i++){
-        const el = document.createElement("div");
-        el.className = "bubble" + (Math.random() < 0.45 ? " soft" : "");
-        const size = rand(120, 440);
-        el.style.width = size + "px";
-        el.style.height = size + "px";
-        el.style.opacity = "1";
-        el.style.transform = `translate3d(${rand(-40, window.innerWidth - 40)}px, ${rand(-40, window.innerHeight - 40)}px, 0)`;
-        layer.appendChild(el);
-      }
-    }
-  </script>
+<div class="container">
+<div class="top">
+<div>
+<h1>Riley</h1>
+<div class="pronouns">she/her</div>
+</div>
+<div class="now-playing" id="nowPlaying" style="display:none">
+<img id="cover">
+<div class="track-info">
+<strong id="song"></strong>
+<span id="artist"></span>
+</div>
+</div>
+</div>
+<div class="links">
+<a href="https://github.com/rocketing" target="_blank">
+<div class="left"><i class="fa-brands fa-github"></i><span>GitHub</span></div>
+<span class="arrow">→</span>
+</a>
+<a href="https://tiktok.com/@rileysc" target="_blank">
+<div class="left"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></div>
+<span class="arrow">→</span>
+</a>
+<a href="https://pin.it/1BoOtY1Oe" target="_blank">
+<div class="left"><i class="fa-brands fa-pinterest"></i><span>Pinterest</span></div>
+<span class="arrow">→</span>
+</a>
+</div>
+<footer>© <span id="year"></span></footer>
+</div>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear()
+const apiKey="936113a012fd5ac903c62c4a4160b6fd"
+const username="meowriley"
+async function getNowPlaying(){
+const url=`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`
+const res=await fetch(url)
+const data=await res.json()
+const track=data.recenttracks.track[0]
+if(track){
+document.getElementById("song").textContent=track.name
+document.getElementById("artist").textContent=track.artist["#text"]
+document.getElementById("cover").src=track.image[2]["#text"]
+document.getElementById("nowPlaying").style.display="flex"
+}}
+getNowPlaying()
+setInterval(getNowPlaying,15000)
+</script>
 </body>
 </html>

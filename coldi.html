@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riley — Screenshot Archive</title>
+
+<style>
+:root {
+  --bg: #0b0d12;
+  --panel: #111523;
+  --text: #e8ecff;
+  --muted: #aab3d6;
+  --border: rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at 20% 0%, #1a2042 0%, transparent 50%),
+              radial-gradient(circle at 80% 10%, #2a1842 0%, transparent 50%),
+              var(--bg);
+  color: var(--text);
+}
+
+.page {
+  transition: filter 0.2s ease;
+}
+.page.blurred {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Info Box */
+.infoBox {
+  max-width: 1000px;
+  margin: 30px auto 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.infoBox img {
+  display: block;
+  margin: 20px auto 0;
+  max-width: 300px;
+  width: 80%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.infoBox img:hover {
+  opacity: 0.8;
+}
+
+.infoContent {
+  padding: 20px;
+  text-align: left;
+}
+
+.infoContent h3 { margin-top: 10px; }
+
+.infoContent p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.infoContent strong { color: var(--text); }
+
+/* Gallery */
+.gallery {
+  max-width: 1000px;
+  margin: 20px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  padding: 0 15px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.08);
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.card div {
+  padding: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Content Warning */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: var(--panel);
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  border: 1px solid var(--border);
+  text-align: center; /* centers header + text */
+}
+
+.modal h2 {
+  margin-top: 0;
+  text-align: center; /* centered header */
+}
+
+.modal p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.modal button {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: var(--text);
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* centers button */
+}
+
+.modal button:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9998;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 14px;
+}
+
+.lightbox-controls {
+  margin-top: 15px;
+}
+
+.lightbox button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.lightbox button:hover {
+  background: rgba(255,255,255,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Content Warning -->
+<div class="overlay" id="cwOverlay">
+  <div class="modal">
+    <h2>⚠ Content Warning ⚠</h2>
+    <p>The content displayed on this webpage may disturb some users.</p>
+    <p>The content displayed on this webpage can not be verified.</p>
+    <p>The content displayed on this webpage may contain sexually explicit messages.</p>
+    <button onclick="closeWarning()">I Understand, Continue</button>
+  </div>
+</div>
+
+<div class="page blurred" id="page">
+
+  <!-- Info Box -->
+  <div class="infoBox">
+    <img src="https://riley.cafe/hi.gif" alt="Header" onclick="window.location.href='https://riley.cafe'">
+    <div class="infoContent">
+      <h3>ℹ Information:</h3>
+      <p>
+        Hey! My name's Riley and late last year, I was provided the following screenshots between 
+        the #3 (#4 at the time) MCTiers competitor, coldified. These messages are <strong>allegedly</strong> 
+        between coldified (22 years of age) and Sammyy (16 years of age).
+      </p>
+      <p>
+        It's important to note that Sammyy WAS engaging in these conversations without pressure from coldified.
+        Even so, coldified being the adult in the situation, should've known this was wrong and stopped, yet continued.
+      </p>
+      <p>
+        If coldified &amp;/or Sammyy would like this content removed, please feel free to contact me via email (<strong>hello@riley.cafe<strong>).
+      </p>
+      <p style="opacity:0.6;">© riley.cafe 2026</p>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery" id="gallery"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg">
+  <div class="lightbox-controls">
+    <button onclick="prevImage()">◀</button>
+    <button onclick="closeLightbox()">Close</button>
+    <button onclick="nextImage()">▶</button>
+  </div>
+</div>
+
+<script>
+const gallery = document.getElementById("gallery");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+
+let currentIndex = 0;
+const images = [];
+
+// Load images from /images folder
+for (let i = 1; i <= 64; i++) {
+  const filename = "images/" + i + ".JPG";
+  images.push(filename);
+
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${filename}" alt="${i}.JPG">
+    <div>${i}.JPG</div>
+  `;
+  card.onclick = () => openLightbox(i - 1);
+  gallery.appendChild(card);
+}
+
+function closeWarning() {
+  document.getElementById("cwOverlay").style.display = "none";
+  document.getElementById("page").classList.remove("blurred");
+}
+
+function openLightbox(index) {
+  currentIndex = index;
+  lightboxImg.src = images[currentIndex];
+  lightbox.classList.add("open");
+}
+
+function closeLightbox() {
+  lightbox.classList.remove("open");
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  lightboxImg.src = images[currentIndex];
+}
+
+function prevImage() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  lightboxImg.src = images[currentIndex];
+}
+</script>
+
+</body>
+</html>

@@ -1,1 +1,176 @@
-Serene Privacy
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serene — Privacy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070707;
+      --panel: rgba(255,255,255,.02);
+      --panel2: rgba(255,255,255,.03);
+      --stroke: rgba(255,255,255,.09);
+      --stroke2: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.55);
+      --pink:#ff66cc;
+      --shadow: 0 30px 120px rgba(0,0,0,.75);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      height:100%;
+      margin:0;
+    }
+
+    body{
+      font-family: Inter, system-ui;
+      background:
+        radial-gradient(1200px 700px at 50% 40%, rgba(255,102,204,.10), transparent 55%),
+        radial-gradient(1000px 800px at 40% 60%, rgba(255,255,255,.04), transparent 60%),
+        var(--bg);
+      color:var(--text);
+
+      /* CENTERED */
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding: 40px 16px;
+    }
+
+    .frame{
+      width:min(820px, 94vw);
+      padding: 32px 28px;
+      background: linear-gradient(180deg, var(--panel2), rgba(255,255,255,.012));
+      border: 1px solid var(--stroke2);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      position:relative;
+    }
+
+    .frame::before{
+      content:"";
+      position:absolute;
+      inset:14px;
+      border:1px solid rgba(255,255,255,.06);
+      pointer-events:none;
+      border-radius:10px;
+    }
+
+    h1{
+      margin:0 0 6px 0;
+      font-size:22px;
+      font-weight:700;
+      letter-spacing:-.01em;
+      color:var(--pink);
+      text-shadow:0 0 20px rgba(255,102,204,.25);
+    }
+
+    .subtitle{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:24px;
+    }
+
+    h2{
+      margin-top:28px;
+      font-size:15px;
+      font-weight:600;
+      color:rgba(255,255,255,.9);
+    }
+
+    p{
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+      margin:10px 0;
+    }
+
+    ul{
+      margin:10px 0 0 18px;
+      padding:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .footer{
+      margin-top:36px;
+      font-size:12px;
+      color:rgba(255,255,255,.5);
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:28px;
+      padding:10px 14px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      text-decoration:none;
+      border-radius:8px;
+      transition:.15s ease;
+    }
+
+    .back:hover{
+      background:rgba(255,255,255,.05);
+      transform:translateY(-1px);
+    }
+
+    strong{
+      color:rgba(255,255,255,.9);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="frame">
+
+    <h1>Serene Privacy</h1>
+    <div class="subtitle">
+      Minimal. Calm. Intentional.
+    </div>
+
+    <p>
+      Serene only stores what is necessary to function.
+    </p>
+
+    <h2>Stored Data</h2>
+    <ul>
+      <li>Linked Last.fm username</li>
+      <li>Reminders you create (until triggered)</li>
+    </ul>
+
+    <h2>Not Stored</h2>
+    <ul>
+      <li>Message content</li>
+      <li>Direct messages (DMs)</li>
+      <li>Browsing history</li>
+      <li>Personal data outside commands</li>
+    </ul>
+
+    <p>
+      Last.fm cover art is intentionally disabled for safety.
+    </p>
+
+    <p>
+      No moderation tracking. No analytics tracking.
+    </p>
+
+    <div class="footer">
+      Serene • transparent by design
+    </div>
+
+    <a class="back" href="serene.html">← Back to Serene</a>
+
+  </div>
+
+</body>
+</html>

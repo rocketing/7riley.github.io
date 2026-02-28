@@ -1,301 +1,402 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riley • coldified</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>riley.cafe</title>
 
-<style>
-:root {
-  --bg: #0b0d12;
-  --panel: #111523;
-  --text: #e8ecff;
-  --muted: #aab3d6;
-  --border: rgba(255,255,255,0.08);
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-* { box-sizing: border-box; }
+  <style>
+    :root{
+      --bg:#070707;
+      --panel: rgba(255,255,255,.02);
+      --panel2: rgba(255,255,255,.03);
+      --stroke: rgba(255,255,255,.09);
+      --stroke2: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.55);
+      --pink:#ff66cc;
+      --shadow: 0 30px 120px rgba(0,0,0,.75);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 50% 40%, rgba(255,102,204,.10), transparent 55%),
+        radial-gradient(1000px 800px at 40% 60%, rgba(255,255,255,.04), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      padding: 28px 16px 60px;
+    }
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: radial-gradient(circle at 20% 0%, #1a2042 0%, transparent 50%),
-              radial-gradient(circle at 80% 10%, #2a1842 0%, transparent 50%),
-              var(--bg);
-  color: var(--text);
-}
+    .fadeOverlay{
+      position:fixed; inset:0;
+      background:#000;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 180ms ease;
+      z-index:9999;
+    }
+    .fadeOverlay.on{ opacity:.22; }
 
-.page {
-  transition: filter 0.2s ease;
-}
-.page.blurred {
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
-}
+    .wrap{ width:min(980px, 94vw); margin:0 auto; }
 
-/* Info Box */
-.infoBox {
-  max-width: 1000px;
-  margin: 30px auto 10px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  text-align: center;
-}
+    .frame{
+      padding: 26px 22px 22px;
+      background: linear-gradient(180deg, var(--panel2), rgba(255,255,255,.012));
+      border: 1px solid var(--stroke2);
+      border-radius: 2px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .frame::before{
+      content:"";
+      position:absolute; inset:14px;
+      border: 1px solid rgba(255,255,255,.06);
+      pointer-events:none;
+    }
 
-.infoBox img {
-  display: block;
-  margin: 20px auto 0;
-  max-width: 300px;
-  width: 80%;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 4px 6px 14px;
+    }
+    h1{
+      margin:0;
+      font-size: 18px;
+      font-weight:700;
+      letter-spacing:-.01em;
+      color: rgba(255,255,255,.88);
+    }
+    .sub{ margin-top:6px; color:var(--muted); font-size:13px; line-height:1.5; max-width: 70ch; }
 
-.infoBox img:hover {
-  opacity: 0.8;
-}
+    .btnRow{ display:flex; gap:10px; flex-wrap:wrap; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      text-decoration:none;
+      border-radius:0;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, opacity .18s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      font: inherit;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.035);
+      border-color: rgba(255,255,255,.14);
+    }
+    .btn:active{ transform: translateY(0) scale(.995); opacity:.78; }
+    .btn.pressed{ opacity:.45; transform: translateY(0) scale(.995); }
 
-.infoContent {
-  padding: 20px;
-  text-align: left;
-}
+    .grid{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 6px 8px;
+    }
 
-.infoContent h3 { margin-top: 10px; }
+    .tile{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: 10px;
+      overflow:hidden;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      position:relative;
+    }
+    .tile:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.03);
+      border-color: rgba(255,255,255,.16);
+    }
 
-.infoContent p {
-  color: var(--muted);
-  line-height: 1.6;
-}
+    .thumb{
+      width:100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.03);
+    }
 
-.infoContent strong { color: var(--text); }
+    .cap{
+      padding: 10px 10px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+    }
 
-/* Gallery */
-.gallery {
-  max-width: 1000px;
-  margin: 20px auto 60px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 14px;
-  padding: 0 15px;
-}
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0;
+      display:none;
+      place-items:center;
+      background: rgba(0,0,0,.78);
+      z-index: 10000;
+      padding: 18px;
+    }
+    .lightbox.on{ display:grid; }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
+    .lbPanel{
+      width: min(1100px, 96vw);
+      max-height: 90vh;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(15,15,16,.75);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
 
-.card:hover {
-  transform: translateY(-3px);
-  background: rgba(255,255,255,0.08);
-}
+    .lbTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.85);
+      font-size: 13px;
+    }
 
-.card img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-}
+    .lbControls{ display:flex; gap: 8px; }
+    .iconBtn{
+      width: 38px; height: 34px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border-radius: 10px;
+      cursor:pointer;
+      transition: background .12s ease, transform .12s ease, opacity .18s ease;
+    }
+    .iconBtn:hover{ background: rgba(255,255,255,.06); transform: translateY(-1px); }
+    .iconBtn:active{ transform: translateY(0) scale(.99); opacity:.78; }
 
-.card div {
-  padding: 8px;
-  font-size: 13px;
-  color: var(--muted);
-  text-align: center;
-}
+    .lbImgWrap{
+      display:grid;
+      place-items:center;
+      padding: 12px;
+      background: rgba(0,0,0,.22);
+    }
+    .lbImg{
+      max-width: 100%;
+      max-height: 76vh;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 80px rgba(0,0,0,.55);
+    }
 
-/* Content Warning */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
+    /* Optional warning modal */
+    .modal{
+      position:fixed; inset:0;
+      display:none; place-items:center;
+      background: rgba(0,0,0,.68);
+      z-index: 12000;
+      padding: 18px;
+    }
+    .modal.on{ display:grid; }
+    .modalCard{
+      width:min(520px, 94vw);
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(15,15,16,.78);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      text-align:center;
+    }
+    .modalTitle{ font-weight:800; margin:0; }
+    .modalText{ color: var(--muted); line-height:1.6; margin: 10px 0 14px; font-size: 13px; }
 
-.modal {
-  background: var(--panel);
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 500px;
-  width: 90%;
-  border: 1px solid var(--border);
-  text-align: center; /* centers header + text */
-}
-
-.modal h2 {
-  margin-top: 0;
-  text-align: center; /* centered header */
-}
-
-.modal p {
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.modal button {
-  margin-top: 20px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.15);
-  color: var(--text);
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; /* centers button */
-}
-
-.modal button:hover {
-  background: rgba(255,255,255,0.25);
-}
-
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9998;
-}
-
-.lightbox.open { display: flex; }
-
-.lightbox img {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 14px;
-}
-
-.lightbox-controls {
-  margin-top: 15px;
-}
-
-.lightbox button {
-  margin: 0 5px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255,255,255,0.15);
-  color: var(--text);
-  cursor: pointer;
-}
-
-.lightbox button:hover {
-  background: rgba(255,255,255,0.3);
-}
-</style>
+    @media (max-width: 980px){ .grid{ grid-template-columns: repeat(3, 1fr);} }
+    @media (max-width: 680px){ .grid{ grid-template-columns: repeat(2, 1fr);} }
+  </style>
 </head>
 
 <body>
+  <div class="fadeOverlay" id="fadeOverlay" aria-hidden="true"></div>
 
-<!-- Content Warning -->
-<div class="overlay" id="cwOverlay">
-  <div class="modal">
-    <h2>⚠ Content Warning ⚠</h2>
-    <p>The content displayed on this webpage may disturb some users.</p>
-    <p>The content displayed on this webpage can not be verified.</p>
-    <p>The content displayed on this webpage may contain sexually explicit messages.</p>
-    <button onclick="closeWarning()">I Understand, Continue</button>
-  </div>
-</div>
-
-<div class="page blurred" id="page">
-
-  <!-- Info Box -->
-  <div class="infoBox">
-    <img src="https://riley.cafe/hi.gif" alt="Header" onclick="window.location.href='https://riley.cafe'">
-    <div class="infoContent">
-      <h3>ℹ Information:</h3>
-      <p>
-        Hey! My name's Riley and late last year, I was provided the following screenshots between 
-        the #3 (#4 at the time) MCTiers competitor, coldified. These messages are <strong>allegedly</strong> 
-        between coldified (22 years of age) and Sammyy (16 years of age).
-      </p>
-      <p>
-        It's important to note that Sammyy WAS engaging in these conversations without pressure from coldified.
-        Even so, coldified being the adult in the situation, should've known this was wrong and stopped, yet continued.
-      </p>
-      <p>
-        If coldified &amp;/or Sammyy would like this content removed or censored, please feel free to contact me via email (<strong>hello@riley.cafe</strong>).
-      </p>
-      <p style="opacity:0.6;">© riley.cafe 2026</p>
+  <!-- Optional warning modal (edit text or delete this whole block) -->
+  <div class="modal" id="warningModal" aria-hidden="true">
+    <div class="modalCard" role="dialog" aria-modal="true" aria-label="Content notice">
+      <h2 class="modalTitle">⚠ Content Notice ⚠</h2>
+      <div class="modalText">
+        This gallery contains sensitive material. Viewer discretion advised.
+      </div>
+      <button class="btn" id="continueBtn" type="button">I Understand, Continue</button>
     </div>
   </div>
 
-  <!-- Gallery -->
-  <div class="gallery" id="gallery"></div>
-</div>
+  <div class="wrap">
+    <section class="frame">
+      <div class="top">
+        <div>
+          <h1>/coldified</h1>
+          <div class="sub">
+            Hey! My name's Riley and late last year, I was provided the following screenshots between the #3 (#4 at the time) MCTiers competitor, coldified. These messages are allegedly between coldified (22 years of age) and Sammyy (16 years of age). 
+          </div>
+        </div>
+        <div class="btnRow">
+          <a class="btn" data-fade href="index.html">← Back</a>
+          <button class="btn" id="toggleWarning" type="button">Toggle Warning</button>
+        </div>
+      </div>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <img id="lightboxImg">
-  <div class="lightbox-controls">
-    <button onclick="prevImage()">◀</button>
-    <button onclick="closeLightbox()">Close</button>
-    <button onclick="nextImage()">▶</button>
+      <div class="grid" id="grid"></div>
+    </section>
   </div>
-</div>
 
-<script>
-const gallery = document.getElementById("gallery");
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightboxImg");
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lbPanel" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <div class="lbTop">
+        <div id="lbLabel">Image</div>
+        <div class="lbControls">
+          <button class="iconBtn" id="prevBtn" title="Previous" type="button">◀</button>
+          <button class="iconBtn" id="nextBtn" title="Next" type="button">▶</button>
+          <button class="iconBtn" id="closeBtn" title="Close" type="button">✕</button>
+        </div>
+      </div>
+      <div class="lbImgWrap">
+        <img class="lbImg" id="lbImg" alt="Gallery image" />
+      </div>
+    </div>
+  </div>
 
-let currentIndex = 0;
-const images = [];
+  <script>
+    // ====== CONFIG ======
+    const FOLDER = "images";   // change if you want
+    const START = 1;
+    const END = 64;
+    const EXT = "JPG";
+    // ====================
 
-// Load images from /images folder
-for (let i = 1; i <= 64; i++) {
-  const filename = "images/" + i + ".JPG";
-  images.push(filename);
+    const grid = document.getElementById("grid");
+    const overlay = document.getElementById("fadeOverlay");
 
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <img src="${filename}" alt="${i}.JPG">
-    <div>${i}.JPG</div>
-  `;
-  card.onclick = () => openLightbox(i - 1);
-  gallery.appendChild(card);
-}
+    // Build tiles
+    const files = [];
+    for (let i = START; i <= END; i++) files.push(`${i}.${EXT}`);
 
-function closeWarning() {
-  document.getElementById("cwOverlay").style.display = "none";
-  document.getElementById("page").classList.remove("blurred");
-}
+    files.forEach((file, idx) => {
+      const src = `${FOLDER}/${file}`;
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "tile";
+      tile.setAttribute("aria-label", `Open ${file}`);
+      tile.style.padding = "0";
+      tile.style.textAlign = "left";
 
-function openLightbox(index) {
-  currentIndex = index;
-  lightboxImg.src = images[currentIndex];
-  lightbox.classList.add("open");
-}
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.loading = "lazy";
+      img.src = src;
+      img.alt = file;
 
-function closeLightbox() {
-  lightbox.classList.remove("open");
-}
+      // hide broken images (if some numbers missing)
+      img.addEventListener("error", () => tile.remove());
 
-function nextImage() {
-  currentIndex = (currentIndex + 1) % images.length;
-  lightboxImg.src = images[currentIndex];
-}
+      const cap = document.createElement("div");
+      cap.className = "cap";
+      cap.innerHTML = `<span>${file}</span><span>${idx+1}</span>`;
 
-function prevImage() {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  lightboxImg.src = images[currentIndex];
-}
-</script>
+      tile.appendChild(img);
+      tile.appendChild(cap);
+      tile.addEventListener("click", () => openLightbox(idx));
+      grid.appendChild(tile);
+    });
 
+    // Lightbox logic
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbLabel = document.getElementById("lbLabel");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const closeBtn = document.getElementById("closeBtn");
+
+    let current = 0;
+
+    function setLightbox(index){
+      current = (index + files.length) % files.length;
+      const file = files[current];
+      lbImg.src = `${FOLDER}/${file}`;
+      lbLabel.textContent = `${file} (${current+1}/${files.length})`;
+    }
+
+    function openLightbox(index){
+      setLightbox(index);
+      lb.classList.add("on");
+      lb.setAttribute("aria-hidden", "false");
+    }
+
+    function closeLightbox(){
+      lb.classList.remove("on");
+      lb.setAttribute("aria-hidden", "true");
+      lbImg.src = "";
+    }
+
+    prevBtn.addEventListener("click", () => setLightbox(current - 1));
+    nextBtn.addEventListener("click", () => setLightbox(current + 1));
+    closeBtn.addEventListener("click", closeLightbox);
+
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb) closeLightbox();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("on")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") setLightbox(current - 1);
+      if (e.key === "ArrowRight") setLightbox(current + 1);
+    });
+
+    // Optional warning modal
+    const modal = document.getElementById("warningModal");
+    const continueBtn = document.getElementById("continueBtn");
+    const toggleWarning = document.getElementById("toggleWarning");
+
+    // show by default once per browser
+    const seen = localStorage.getItem("gallery_warning_seen");
+    if (!seen) modal.classList.add("on");
+
+    continueBtn.addEventListener("click", () => {
+      modal.classList.remove("on");
+      localStorage.setItem("gallery_warning_seen", "1");
+    });
+
+    toggleWarning.addEventListener("click", () => {
+      modal.classList.toggle("on");
+    });
+
+    // Fade navigation for buttons/links with data-fade
+    const delayMs = 140;
+    document.querySelectorAll("[data-fade]").forEach(el => {
+      el.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const href = el.getAttribute("href");
+        if (!href) return;
+        e.preventDefault();
+        el.classList.add("pressed");
+        overlay.classList.add("on");
+        setTimeout(() => window.location.href = href, delayMs);
+      });
+    });
+  </script>
 </body>
 </html>

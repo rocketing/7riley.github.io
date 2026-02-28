@@ -3,80 +3,306 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Misfit</title>
+  <title>Riley</title>
+
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    rel="stylesheet"
+  />
+
   <style>
-    :root{--bg:#070707;--panel:rgba(255,255,255,.02);--panel2:rgba(255,255,255,.03);--stroke:rgba(255,255,255,.09);--stroke2:rgba(255,255,255,.06);--text:rgba(255,255,255,.92);--muted:rgba(255,255,255,.55);--pink:#ff66cc;--shadow:0 30px 120px rgba(0,0,0,.75);}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:Inter,system-ui;background:
-      radial-gradient(1200px 700px at 50% 40%, rgba(255,102,204,.10), transparent 55%),
-      radial-gradient(1000px 800px at 40% 60%, rgba(255,255,255,.04), transparent 60%),
-      var(--bg);color:var(--text);display:grid;place-items:center;padding:28px 16px;}
-    .fadeOverlay{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 180ms ease;z-index:9999}
-    .fadeOverlay.on{opacity:.22}
-    .frame{width:min(720px,92vw);padding:34px 28px 26px;background:linear-gradient(180deg,var(--panel2),rgba(255,255,255,.012));border:1px solid var(--stroke2);border-radius:2px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
-    .frame::before{content:"";position:absolute;inset:14px;border:1px solid rgba(255,255,255,.06);pointer-events:none;}
-    .head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-    .logo{width:44px;height:44px;border-radius:6px;object-fit:contain;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:6px;flex:0 0 auto}
-    h1{margin:0;font-size:26px;color:var(--pink);text-shadow:0 0 20px rgba(255,102,204,.25)}
-    .sub{margin-top:6px;color:var(--muted);font-size:13px}
-    .box{border:1px solid var(--stroke);background:rgba(255,255,255,.02);padding:14px;border-radius:0;margin-top:12px}
-    .btnRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;text-decoration:none;color:var(--text);background:rgba(255,255,255,.02);border:1px solid var(--stroke);border-radius:0;transition:transform .12s ease,opacity .18s ease,background .12s ease,border-color .12s ease;user-select:none;-webkit-tap-highlight-color:transparent}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.14)}
-    .btn:active{transform:translateY(0) scale(.995);opacity:.78}
-    .btn.pressed{opacity:.45;transform:translateY(0) scale(.995)}
-    .muted{color:var(--muted);line-height:1.6}
-    ul{margin:10px 0 0 18px;color:var(--muted);line-height:1.6}
+    :root{
+      --bg:#070707;
+      --panel: rgba(255,255,255,.02);
+      --panel2: rgba(255,255,255,.03);
+      --stroke: rgba(255,255,255,.09);
+      --stroke2: rgba(255,255,255,.06);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.55);
+      --pink:#ff66cc;
+      --shadow: 0 30px 120px rgba(0,0,0,.75);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: Inter, system-ui;
+      background:
+        radial-gradient(1200px 700px at 50% 40%, rgba(255,102,204,.10), transparent 55%),
+        radial-gradient(1000px 800px at 40% 60%, rgba(255,255,255,.04), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      padding: 28px 16px;
+    }
+
+    .frame{
+      width: min(560px, 92vw);
+      padding: 34px 28px 26px;
+      background: linear-gradient(180deg, var(--panel2), rgba(255,255,255,.012));
+      border: 1px solid var(--stroke2);
+      border-radius: 2px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .frame::before{
+      content:"";
+      position:absolute;
+      inset: 14px;
+      border: 1px solid rgba(255,255,255,.06);
+      pointer-events:none;
+    }
+
+    .fadeOverlay{
+      position:fixed;
+      inset:0;
+      background:#000;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 180ms ease;
+      z-index:9999;
+    }
+    .fadeOverlay.on{ opacity:.22; }
+
+    .top{text-align:center;padding-top:6px;}
+    .name{
+      margin:0;
+      font-size:30px;
+      font-weight:700;
+      letter-spacing:-.02em;
+      color:var(--pink);
+      text-shadow:0 0 20px rgba(255,102,204,.25);
+    }
+    .pronouns{
+      margin:8px 0 22px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:0 10px;
+      margin-top:6px;
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px;
+      text-decoration:none;
+      color:var(--text);
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--stroke);
+      transition:.15s ease;
+    }
+
+    .row:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.035);
+      border-color:rgba(255,255,255,.14);
+    }
+
+    .row:active{
+      transform:scale(.995);
+      opacity:.78;
+    }
+
+    .row.pressed{
+      opacity:.45;
+    }
+
+    .icon{
+      width:20px;
+      text-align:center;
+      font-size:16px;
+      opacity:.9;
+    }
+
+    .label{font-weight:600;font-size:14px;}
+    .spacer{flex:1;}
+    .arrow{opacity:.6;}
+
+    .dropWrap{margin-top:14px;padding:0 10px;}
+
+    .dropBtn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--stroke);
+      color:var(--text);
+      font:inherit;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+
+    .dropBtn:hover{
+      background:rgba(255,255,255,.035);
+      border-color:rgba(255,255,255,.14);
+    }
+
+    .chev{transition:transform .18s ease;}
+    .open .chev{transform:rotate(180deg);}
+
+    .dropPanel{
+      display:none;
+      border:1px solid rgba(255,255,255,.10);
+      border-top:none;
+      background:rgba(255,255,255,.015);
+      padding:10px;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .proj{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.02);
+      text-decoration:none;
+      color:var(--text);
+      transition:.15s ease;
+    }
+
+    .proj:hover{
+      background:rgba(255,255,255,.035);
+      border-color:rgba(255,255,255,.14);
+      transform:translateY(-1px);
+    }
+
+    .logo{
+      width:26px;
+      height:26px;
+      object-fit:contain;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:4px;
+    }
+
+    .projName{font-weight:600;font-size:14px;}
+    .projPath{font-size:12px;color:var(--muted);}
   </style>
 </head>
+
 <body>
-  <div class="fadeOverlay" id="fadeOverlay" aria-hidden="true"></div>
+  <div class="fadeOverlay" id="fadeOverlay"></div>
 
   <main class="frame">
-    <div class="head">
-      <img class="logo" src="assets/misfit/logo.png" alt="Misfit logo" />
-      <div>
-        <h1>Misfit</h1>
-        <div class="sub">/misfit</div>
-      </div>
+    <div class="top">
+      <h1 class="name">Riley</h1>
+      <div class="pronouns">she/her</div>
     </div>
 
-    <div class="box">
-      <div class="muted">
-        A cute chat platform concept with servers, themes, profiles, badges, and an admin panel.
-      </div>
-      <ul>
-        <li>Servers + messages</li>
-        <li>Themes (Void / Cherry / Angel / Magma / Magical)</li>
-        <li>Profiles (avatar, banner, bio, pronouns)</li>
-        <li>Badges + moderation tools</li>
-      </ul>
+    <nav class="list">
+      <a class="row" data-fade href="https://github.com/rocketing" target="_blank">
+        <div class="icon"><i class="fa-brands fa-github"></i></div>
+        <div class="label">GitHub</div>
+        <div class="spacer"></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
 
-      <div class="btnRow">
-        <a class="btn" data-fade href="/index.html">← Back</a>
-        <a class="btn" data-fade href="/rzip.html">.rzip →</a>
-        <a class="btn" data-fade href="/serene.html">Serene →</a>
+      <a class="row" data-fade href="https://tiktok.com/@rileysc" target="_blank">
+        <div class="icon"><i class="fa-brands fa-tiktok"></i></div>
+        <div class="label">TikTok</div>
+        <div class="spacer"></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+      <a class="row" data-fade href="https://pin.it/1BoOtY1Oe" target="_blank">
+        <div class="icon"><i class="fa-brands fa-pinterest"></i></div>
+        <div class="label">Pinterest</div>
+        <div class="spacer"></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+      <a class="row" data-fade href="https://instagram.com/rileykwi" target="_blank">
+        <div class="icon"><i class="fa-brands fa-instagram"></i></div>
+        <div class="label">Instagram</div>
+        <div class="spacer"></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+    </nav>
+
+    <div class="dropWrap">
+      <button class="dropBtn" id="projectsBtn">
+        <span style="font-weight:600;font-size:14px;">Projects</span>
+        <span class="chev"><i class="fa-solid fa-chevron-down"></i></span>
+      </button>
+
+      <div class="dropPanel" id="projectsPanel">
+        <a class="proj" data-fade href="misfit.html">
+          <img class="logo" src="assets/misfit/logo.png">
+          <div>
+            <div class="projName">Misfit</div>
+            <div class="projPath">misfit.html</div>
+          </div>
+        </a>
+
+        <a class="proj" data-fade href="rzip.html">
+          <img class="logo" src="assets/rzip/logo.png">
+          <div>
+            <div class="projName">.rzip</div>
+            <div class="projPath">rzip.html</div>
+          </div>
+        </a>
+
+        <a class="proj" data-fade href="serene.html">
+          <img class="logo" src="assets/serene/logo.png">
+          <div>
+            <div class="projName">Serene</div>
+            <div class="projPath">serene.html</div>
+          </div>
+        </a>
       </div>
     </div>
   </main>
 
-  <script>
-    const overlay = document.getElementById("fadeOverlay");
-    const delayMs = 140;
-    document.querySelectorAll("[data-fade]").forEach(el => {
-      el.addEventListener("click",(e)=>{
-        if (e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
-        const href = el.getAttribute("href");
-        if (href && href.startsWith("/")){
-          e.preventDefault();
-          el.classList.add("pressed");
-          overlay.classList.add("on");
-          setTimeout(()=>window.location.href=href, delayMs);
+<script>
+  const btn = document.getElementById("projectsBtn");
+  const panel = document.getElementById("projectsPanel");
+  btn.addEventListener("click", () => {
+    const open = btn.classList.toggle("open");
+    panel.style.display = open ? "flex" : "none";
+  });
+
+  const overlay = document.getElementById("fadeOverlay");
+  document.querySelectorAll("[data-fade]").forEach(el=>{
+    el.addEventListener("click",(e)=>{
+      if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+      const href=el.getAttribute("href");
+      if(!href) return;
+      e.preventDefault();
+      el.classList.add("pressed");
+      overlay.classList.add("on");
+      setTimeout(()=>{
+        if(el.target==="_blank"){
+          window.open(href,"_blank");
+          overlay.classList.remove("on");
+          el.classList.remove("pressed");
+        } else {
+          window.location.href=href;
         }
-      });
+      },140);
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
